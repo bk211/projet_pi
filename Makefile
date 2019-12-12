@@ -1,2 +1,2 @@
-exec:	test.cpp
-	g++ $< -Wall -o $@ -lpthread -lgmp -lgmpxx
+exec:	pi.cpp
+	g++ $< -Wall -o $@ -pthread -lgmpxx -lgmp
