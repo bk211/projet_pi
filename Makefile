@@ -1,2 +1,2 @@
 exec:	pi.cpp
-	g++ $< -Wall -o $@ -pthread -lgmpxx -lgmp
+	g++ $< -Wall -o $@ -pthread -lgmpxx -lgmp -O3

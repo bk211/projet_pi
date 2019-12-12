@@ -10,16 +10,29 @@
 using namespace std;
 
 mpf_class BBP(int k){
-    mpf_class a, b, c, d, e, _8k;
-    _8k = 8*k;
+    mpf_class z;
+    z = 8*k;
+    //mpf_class p,f;
+    //mpf_pow_ui(p.get_mpf_t(), f.get_mpf_t() ,k);
+    //cout<<"z = "<< z<<endl;
+    //cout<<"p = "<< p<<endl;
   
+    mpf_class a, b, c, d, e,x;
     a = 1 / pow(16,k);
-    b = 4 / (_8k+1);
-    c = 2 / (_8k+4);
-    d = 1 / (_8k+5);    
-    e = 1 / (_8k+6);
-    
-    return a * (b - c - d - e);
+    //cout<<"a = "<< a<<endl;
+    b = 4 / (z+1);
+    //cout<<"b = "<< b<<endl;
+    c = 2 / (z+4);
+    //cout<<"c = "<< c<<endl;
+    d = 1 / (z+5);    
+    //cout<<"d = "<< d<<endl;
+    e = 1 / (z+6);
+    //cout<<"e = "<< e<<endl;
+    x = a * (b - c - d - e);
+    return x; 
+  
+
+ //   return (4/(z+1) - 2/(z+4) - 1/(z+5) - 1/(z+6)) / p ;
 }
 
 void loop_BBP(int step, int begin, int kmax, mpf_class ret[]){
@@ -29,7 +42,9 @@ void loop_BBP(int step, int begin, int kmax, mpf_class ret[]){
     for (int i = begin; i <= kmax; i+= step)
     {
         result += BBP(i);
+        //mpf_add(result.get_mpf_t(), result.get_mpf_t(), BBP(i).get_mpf_t());
     }
+
     ret[begin] = result;
 
 }
@@ -48,7 +63,7 @@ int main(int argc, char *argv[]){
     if(nb_thread<=0 || precision <=0){
         cout<<"nb_thread and precision must be over 0"<<endl;
         return 0;
-    }
+    } 
     cout<<"nb_thread = "<< nb_thread<<endl;
     cout<<"precision = "<< precision <<endl;
 
@@ -68,7 +83,8 @@ int main(int argc, char *argv[]){
     }
     
     for (int i = 1; i < nb_thread; i++){
-        tab[0] += tab[i];
+        //cout<<tab[i]<<endl;
+        mpf_add(tab[0].get_mpf_t(), tab[0].get_mpf_t(), tab[i].get_mpf_t());
     }
 
     //gmp_printf("result = %.*Ff \n", precision, tab[0].get_mpf_t());
